@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-mediapicker"
-        version="1.0.2">
+        version="1.0.3">
 
         <name>MediaPicker</name>
         <description>Select Media files Using Media Picker Cordova Plugin</description>
@@ -23,10 +23,6 @@
                 <feature name="MediaPicker">
                     <param name="ios-package" value="MediaPicker" />
                 </feature>
-            </config-file>
-                
-            <config-file target="*-Info.plist" parent="NSAppleMusicUsageDescription">
-                <string>This app requires access to music library.</string>
             </config-file>
 
             <header-file src="src/ios/MediaPicker.h" />

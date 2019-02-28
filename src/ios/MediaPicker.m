@@ -140,8 +140,8 @@
                     case AVAssetExportSessionStatusFailed:{
                         NSError *exportError = exporter.error;
                         NSLog(@"AVAssetExportSessionStatusFailed = %@",exportError);
-                        NSString *errmsg = [exportError description];
-                        plresult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errmsg];
+                        plresult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"The operation could not be completed"];
+                        [self.commandDelegate sendPluginResult:plresult callbackId:callbackID];
                         break;
                     }
                     case AVAssetExportSessionStatusCompleted:{
@@ -190,32 +190,40 @@
                         if (completed == selcount) {
                             plresult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:songsList];
                             [self.commandDelegate sendPluginResult:plresult callbackId:callbackID];
+                        } else {
+                            plresult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"ASSETS_NOT_EXPORTED"];
+                            [self.commandDelegate sendPluginResult:plresult callbackId:callbackID];
                         }
                         break;
                     }
                     case AVAssetExportSessionStatusCancelled:{
                         NSLog(@"AVAssetExportSessionStatusCancelled");
                         plresult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Cancelled"];
+                        [self.commandDelegate sendPluginResult:plresult callbackId:callbackID];
                         break;
                     }
                     case AVAssetExportSessionStatusUnknown:{
                         NSLog(@"AVAssetExportSessionStatusCancelled");
                         plresult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Unknown"];
+                        [self.commandDelegate sendPluginResult:plresult callbackId:callbackID];
                         break;
                     }
                     case AVAssetExportSessionStatusWaiting:{
                         NSLog(@"AVAssetExportSessionStatusWaiting");
                         plresult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Waiting"];
+                        [self.commandDelegate sendPluginResult:plresult callbackId:callbackID];
                         break;
                     }
                     case AVAssetExportSessionStatusExporting:{
                         NSLog(@"AVAssetExportSessionStatusExporting");
                         plresult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Exporting"];
+                        [self.commandDelegate sendPluginResult:plresult callbackId:callbackID];
                         break;
                     }
-
                     default:{
                         NSLog(@"Didnt get any status");
+                        plresult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"No Status"];
+                        [self.commandDelegate sendPluginResult:plresult callbackId:callbackID];
                         break;
                     }
                 }
@@ -229,7 +237,7 @@
 
 - (void)mediaPickerDidCancel:(MPMediaPickerController *)mediaPicker
 {
-    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Selection cancelled"];
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:[[NSMutableArray alloc] init]];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackID];
     [self.viewController dismissViewControllerAnimated:YES completion:nil];
 }

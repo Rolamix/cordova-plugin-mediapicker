@@ -76,7 +76,8 @@ public class MediaPicker extends CordovaPlugin {
                         mCallbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "Invalid file"));
                     }
                 } else {
-                    mCallbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "Selection cancelled"));
+                    JSONArray cancelArray = new JSONArray();
+                    mCallbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, cancelArray));
                 }
             }
         }
